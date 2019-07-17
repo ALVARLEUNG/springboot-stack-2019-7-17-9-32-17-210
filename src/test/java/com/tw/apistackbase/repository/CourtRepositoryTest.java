@@ -39,7 +39,15 @@ public class CourtRepositoryTest {
         Assertions.assertEquals("Court", result.getName());
     }
 
+    @Test
+    @DirtiesContext
+    public void test_should_throw_exception_when_create_a_case_message() {
+        //given
 
+        assertThrows(Exception.class, () -> {
+            courtRepository.saveAndFlush(new Court());
+        });
+    }
 
 
 }
