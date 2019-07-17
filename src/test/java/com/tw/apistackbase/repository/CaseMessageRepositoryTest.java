@@ -42,4 +42,16 @@ public class CaseMessageRepositoryTest {
         Assertions.assertEquals("main description", caseMessage1.getMainDescription());
     }
 
+    @Test
+    @DirtiesContext
+    public void test_should_throw_exception_when_create_a_case_message() {
+        //given
+        CaseMessage caseMessage = new CaseMessage();
+        caseMessage.setMainDescription("main description");
+
+        assertThrows(Exception.class, () -> {
+            caseMessageRepository.saveAndFlush(caseMessage);
+        });
+    }
+
 }
