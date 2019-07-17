@@ -90,7 +90,27 @@ public class CriminalCaseRepositoryTest {
         Assertions.assertEquals(Long.valueOf(102012), criminalCases.get(0).getTime());
 
     }
-    
+
+    @Test
+    @DirtiesContext
+    public void test_should_return_all_case_when_call_find_all_cases_by_name () {
+        //given
+        CriminalCase criminalCase = new CriminalCase();
+        criminalCase.setTime((long) 102011);
+        criminalCase.setName("criminalCase1");
+
+        CriminalCase criminalCase1 = new CriminalCase();
+        criminalCase1.setTime((long) 102012);
+        criminalCase1.setName("criminalCase2");
+
+        //when
+        criminalCaseRepository.save(criminalCase);
+        criminalCaseRepository.save(criminalCase1);
+
+        //then
+        List<CriminalCase> criminalCases= criminalCaseRepository.findAllByName("criminalCase1");
+        Assertions.assertEquals("criminalCase1", criminalCases.get(0).getName());
+    }
 
 
 
