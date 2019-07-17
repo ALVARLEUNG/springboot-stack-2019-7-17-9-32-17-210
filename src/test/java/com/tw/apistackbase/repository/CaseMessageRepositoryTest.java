@@ -3,6 +3,7 @@ package com.tw.apistackbase.repository;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.tw.apistackbase.model.CaseMessage;
+import com.tw.apistackbase.model.Court;
 import com.tw.apistackbase.model.CriminalCase;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
@@ -91,6 +92,31 @@ public class CaseMessageRepositoryTest {
         //then
         List<CaseMessage> caseMessages = caseMessageRepository.findAll();
         Assertions.assertNotNull(caseMessages.get(0).getCriminalCase());
+
+    }
+
+    @Test
+    @DirtiesContext
+    public void test_should_return_case_message_include_court_when_find_all_cases () {
+        //given
+        CaseMessage caseMessage = new CaseMessage();
+        caseMessage.setMainDescription("main description");
+        caseMessage.setMinorDescription("minor description");
+        CriminalCase criminalCase = new CriminalCase();
+        criminalCase.setTime((long) 102011);
+        criminalCase.setName("criminalCase");
+        caseMessage.setCriminalCase(criminalCase);
+        Court court = new Court();
+        court.setName("Court");
+        caseMessage.setCourt(court);
+
+
+        //when
+        CaseMessage caseMessage1 = caseMessageRepository.save(caseMessage);
+
+        //then
+        List<CaseMessage> caseMessages = caseMessageRepository.findAll();
+        Assertions.assertNotNull(caseMessages.get(0).getCourt());
 
     }
 

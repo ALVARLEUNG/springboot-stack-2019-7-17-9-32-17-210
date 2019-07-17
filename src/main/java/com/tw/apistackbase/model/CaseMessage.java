@@ -17,7 +17,11 @@ public class CaseMessage {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "case_id", referencedColumnName = "id")
-    CriminalCase criminalCase;
+    private CriminalCase criminalCase;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "court_id", referencedColumnName = "id")
+    private Court court;
 
     public Long getId() {
         return id;
@@ -49,5 +53,13 @@ public class CaseMessage {
 
     public void setCriminalCase(CriminalCase criminalCase) {
         this.criminalCase = criminalCase;
+    }
+
+    public Court getCourt() {
+        return court;
+    }
+
+    public void setCourt(Court court) {
+        this.court = court;
     }
 }

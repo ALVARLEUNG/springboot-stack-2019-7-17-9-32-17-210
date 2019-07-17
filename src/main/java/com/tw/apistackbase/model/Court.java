@@ -13,10 +13,6 @@ public class Court {
     @Column(unique = true, nullable = false)
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "case_id", referencedColumnName = "id")
-    private List<CriminalCase> criminalCases;
-
 
     public Long getId() {
         return id;
@@ -34,11 +30,4 @@ public class Court {
         this.name = name;
     }
 
-    public List<CriminalCase> getCriminalCases() {
-        return criminalCases;
-    }
-
-    public void setCriminalCases(List<CriminalCase> criminalCases) {
-        this.criminalCases = criminalCases;
-    }
 }

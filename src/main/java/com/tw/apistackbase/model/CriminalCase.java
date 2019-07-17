@@ -17,6 +17,7 @@ public class CriminalCase implements Serializable {
     @Column(nullable = false)
     private Long time;
 
+
     public Long getId() {
         return id;
     }
