@@ -54,4 +54,22 @@ public class CaseMessageRepositoryTest {
         });
     }
 
+    @Test
+    @DirtiesContext
+    public void test_should_return_case_message_when_find_the_case_by_id () {
+        //given
+        CaseMessage caseMessage = new CaseMessage();
+        caseMessage.setMainDescription("main description");
+        caseMessage.setMinorDescription("minor description");
+
+
+        //when
+        CaseMessage caseMessage1 = caseMessageRepository.save(caseMessage);
+
+        //then
+        CaseMessage criminalCase1 = caseMessageRepository.findById(caseMessage1.getId()).orElse(null);
+        Assertions.assertNotNull(criminalCase1);
+
+    }
+
 }
