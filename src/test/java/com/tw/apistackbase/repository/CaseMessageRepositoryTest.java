@@ -67,9 +67,32 @@ public class CaseMessageRepositoryTest {
         CaseMessage caseMessage1 = caseMessageRepository.save(caseMessage);
 
         //then
-        CaseMessage criminalCase1 = caseMessageRepository.findById(caseMessage1.getId()).orElse(null);
-        Assertions.assertNotNull(criminalCase1);
+        CaseMessage caseMessage2 = caseMessageRepository.findById(caseMessage1.getId()).orElse(null);
+        Assertions.assertNotNull(caseMessage2);
 
     }
+
+    @Test
+    @DirtiesContext
+    public void test_should_return_case_message_include_criminal_case_when_find_all_cases () {
+        //given
+        CaseMessage caseMessage = new CaseMessage();
+        caseMessage.setMainDescription("main description");
+        caseMessage.setMinorDescription("minor description");
+        CriminalCase criminalCase = new CriminalCase();
+        criminalCase.setTime((long) 102011);
+        criminalCase.setName("criminalCase");
+        caseMessage.setCriminalCase(criminalCase);
+
+
+        //when
+        CaseMessage caseMessage1 = caseMessageRepository.save(caseMessage);
+
+        //then
+        List<CaseMessage> caseMessages = caseMessageRepository.findAll();
+        Assertions.assertNotNull(caseMessages.get(0).getCriminalCase());
+
+    }
+
 
 }

@@ -15,7 +15,7 @@ public class CaseMessage {
     @Column(nullable = false)
     private String minorDescription;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "case_id", referencedColumnName = "id")
     CriminalCase criminalCase;
 
