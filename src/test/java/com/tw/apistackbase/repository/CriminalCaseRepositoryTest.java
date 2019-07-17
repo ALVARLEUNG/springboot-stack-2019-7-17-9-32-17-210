@@ -10,6 +10,8 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 //import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -27,7 +29,6 @@ public class CriminalCaseRepositoryTest {
     public void test_should_return_case_when_create_a_case() {
         //given
         CriminalCase criminalCase = new CriminalCase();
-        criminalCase.getId();
         criminalCase.setName("criminalCase");
         criminalCase.setTime((long) 102011);
 
@@ -43,7 +44,6 @@ public class CriminalCaseRepositoryTest {
     public void test_should_throw_exception_when_create_a_case() {
         //given
         CriminalCase criminalCase = new CriminalCase();
-        criminalCase.getId();
         criminalCase.setName("criminalCase");
 
         assertThrows(Exception.class, () -> {
@@ -56,7 +56,6 @@ public class CriminalCaseRepositoryTest {
     public void test_should_return_case_when_find_the_case_by_id () {
         //given
         CriminalCase criminalCase = new CriminalCase();
-        criminalCase.getId();
         criminalCase.setTime((long) 102011);
         criminalCase.setName("criminalCase");
 
@@ -68,6 +67,30 @@ public class CriminalCaseRepositoryTest {
         Assertions.assertNotNull(criminalCase1);
 
     }
+
+    @Test
+//    @DirtiesContext
+    public void test_should_return_all_case_when_call_find_all_cases_order_by_DESC () {
+        //given
+        CriminalCase criminalCase = new CriminalCase();
+        criminalCase.setTime((long) 102011);
+        criminalCase.setName("criminalCase1");
+
+        CriminalCase criminalCase1 = new CriminalCase();
+        criminalCase1.setTime((long) 102012);
+        criminalCase1.setName("criminalCase2");
+
+        //when
+        criminalCaseRepository.save(criminalCase);
+        criminalCaseRepository.save(criminalCase1);
+
+        //then
+        List<CriminalCase> criminalCases= criminalCaseRepository.findAllByOrderByTimeDesc();
+        Assertions.assertEquals(2, criminalCases.size());
+        Assertions.assertEquals(Long.valueOf(102012), criminalCases.get(0).getTime());
+
+    }
+    
 
 
 

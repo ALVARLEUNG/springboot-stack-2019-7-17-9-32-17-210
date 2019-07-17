@@ -2,12 +2,13 @@ package com.tw.apistackbase.model;
 
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class CriminalCase {
+public class CriminalCase implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private Long id;
 
     @Column(nullable = false)
