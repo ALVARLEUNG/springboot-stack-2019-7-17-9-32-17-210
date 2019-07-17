@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 //import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -69,7 +70,7 @@ public class CriminalCaseRepositoryTest {
     }
 
     @Test
-//    @DirtiesContext
+    @DirtiesContext
     public void test_should_return_all_case_when_call_find_all_cases_order_by_DESC () {
         //given
         CriminalCase criminalCase = new CriminalCase();
@@ -110,6 +111,29 @@ public class CriminalCaseRepositoryTest {
         //then
         List<CriminalCase> criminalCases= criminalCaseRepository.findAllByName("criminalCase1");
         Assertions.assertEquals("criminalCase1", criminalCases.get(0).getName());
+    }
+
+    @Test
+    @DirtiesContext
+    public void test_should_delete_case_when_call_find_all_cases_by_name () {
+        //given
+        CriminalCase criminalCase = new CriminalCase();
+        criminalCase.setTime((long) 102011);
+        criminalCase.setName("criminalCase1");
+
+        CriminalCase criminalCase1 = new CriminalCase();
+        criminalCase1.setTime((long) 102012);
+        criminalCase1.setName("criminalCase2");
+
+        //when
+        CriminalCase criminalCase2 = criminalCaseRepository.save(criminalCase);
+        criminalCaseRepository.save(criminalCase1);
+
+        //then
+        criminalCaseRepository.deleteById(Long.valueOf(criminalCase2.getId()));
+
+        List<CriminalCase> criminalCases = criminalCaseRepository.findAll();
+        Assertions.assertEquals(1, criminalCases.size());
     }
 
 
