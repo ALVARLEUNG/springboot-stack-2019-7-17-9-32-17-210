@@ -36,5 +36,15 @@ public class ExaminantRepositoryTest {
         Assertions.assertEquals("Examinant", result.getName());
     }
 
+    @Test
+    @DirtiesContext
+    public void test_should_throw_exception_when_create_a_examinant_given_no_name() {
+        //given
+
+        assertThrows(Exception.class, () -> {
+            examinantRepository.saveAndFlush(new Examinant());
+        });
+    }
+
 
 }
