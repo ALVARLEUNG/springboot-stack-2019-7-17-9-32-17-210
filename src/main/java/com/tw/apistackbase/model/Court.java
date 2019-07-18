@@ -13,6 +13,10 @@ public class Court {
     @Column(unique = true, nullable = false)
     private String name;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "examinant_id", referencedColumnName = "id")
+    private List<Examinant> examinants;
+
 
     public Long getId() {
         return id;
@@ -30,4 +34,11 @@ public class Court {
         this.name = name;
     }
 
+    public List<Examinant> getExaminants() {
+        return examinants;
+    }
+
+    public void setExaminants(List<Examinant> examinants) {
+        this.examinants = examinants;
+    }
 }

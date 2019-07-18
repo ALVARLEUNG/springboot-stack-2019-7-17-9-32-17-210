@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import com.tw.apistackbase.model.CaseMessage;
 import com.tw.apistackbase.model.Court;
 import com.tw.apistackbase.model.CriminalCase;
+import com.tw.apistackbase.model.Examinant;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
@@ -64,6 +65,27 @@ public class CourtRepositoryTest {
         //then
         Court result = courtRepository.findById(court1.getId()).orElse(null);
         Assertions.assertNotNull(result);
+
+    }
+
+    @Test
+    @DirtiesContext
+    public void test_should_return_case_message_include_court_when_find_all_cases () {
+        //given
+        Court court = new Court();
+        court.setName("Court");
+        Examinant examinant = new Examinant();
+        examinant.setName("Examinant");
+        List<Examinant> examinants = new ArrayList<>();
+        examinants.add(examinant);
+        court.setExaminants(examinants);
+
+        //when
+        courtRepository.save(court);
+
+        //then
+        List<Court> courts = courtRepository.findAll();
+        Assertions.assertEquals(1, courts.get(0).getExaminants().size());
 
     }
 
