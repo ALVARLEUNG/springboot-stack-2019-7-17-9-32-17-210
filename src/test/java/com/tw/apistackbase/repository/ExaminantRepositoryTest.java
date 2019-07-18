@@ -46,5 +46,21 @@ public class ExaminantRepositoryTest {
         });
     }
 
+    @Test
+    @DirtiesContext
+    public void test_should_return_examinant_when_find_the_examinant_by_id () {
+        //given
+        Examinant examinant = new Examinant();
+        examinant.setName("Examinant");
+
+
+        //when
+        Examinant examinant1 = examinantRepository.save(examinant);
+
+        //then
+        Examinant result = examinantRepository.findById(examinant1.getId()).orElse(null);
+        Assertions.assertNotNull(result);
+
+    }
 
 }
